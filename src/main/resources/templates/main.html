@@ -37,6 +37,9 @@
                     <input type="submit" value="수정">
                 </div>
             </form>
+            <form th:action="@{|/delete/${targetNote.id}|}" method="post">
+                <input type="submit" value="삭제">
+            </form>
         </div>
     </div>
 </div>

@@ -68,6 +68,13 @@ public class NoteController {
         return "redirect:/detail/" + id;
     }
 
+    @PostMapping("/delete/{id}")
+    public String delete(@PathVariable("id") Long id) {
+
+        noteRepository.deleteById(id);
+        return "redirect:/";
+    }
+
     private Note saveDefault() {
         Note note = new Note();
         note.setTitle("new title..");
