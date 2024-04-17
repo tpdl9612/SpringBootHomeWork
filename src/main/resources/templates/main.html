@@ -12,7 +12,7 @@
     <div class="bg-red-600 flex">
         <div class="bg-red-300 w-[20%] h-[800px] text-center ">
             <ul class="h-[100%]">
-                <li th:each="note : ${noteList}">
+                <li th:each="note : ${noteList}" th:class="${note.id == targetNote.id} ? 'bg-blue-600' : ''">
                     <a th:href="@{|/detail/${note.id}|}" th:text="${note.title}"></a>
                 </li>
             </ul>
