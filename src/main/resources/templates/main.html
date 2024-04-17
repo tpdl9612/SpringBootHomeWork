@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="/main.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+<div class="bg-yellow-400">
+    <div class="bg-blue-300">logo</div>
+    <div class="bg-red-600 flex">
+        <div class="bg-red-300 w-[20%] h-[800px] text-center ">
+            <ul class="h-[100%]">
+                <li th:each="note : ${noteList}">
+                    <a th:href="@{|/detail/${note.id}|}" th:text="${note.title}"></a>
+                </li>
+            </ul>
+
+            <form action="/write" method="post">
+                <input type="submit" value="추가">
+            </form>
+        </div>
+
+        <div class="bg-green-300 w-[80%]">
+            <form action="/update" method="post">
+                <div>
+                    <input type="hidden" name="id" th:value="${targetNote.id}">
+                </div>
+                <div>
+                    <input type="text" name="title" th:value="${targetNote.title}">
+                </div>
+                <div>
+                    <textarea name="content" cols="30" rows="10" th:text="${targetNote.content}"></textarea>
+                </div>
+                <div>
+                    <input type="submit" value="수정">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>
