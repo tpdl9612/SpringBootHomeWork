@@ -11,6 +11,13 @@
         <a href="/">logo</a>
     </div>
     <div class="bg-red-600 flex">
+        <div class="bg-indigo-300 w-[20%]">
+            <ul class="h-[100%] overflow-scroll">
+                <li th:each="notebook : ${notebookList}" th:class="${notebook.id == targetNotebook.id} ? 'bg-blue-600' : ''">
+                    <a th:href="@{|/detail/${notebook.id}|}" th:text="${notebook.name}"></a>
+                </li>
+            </ul>
+        </div>
         <div class="bg-red-300 w-[20%] h-[800px] text-center ">
             <ul class="h-[100%] overflow-scroll">
                 <li th:each="note : ${noteList}" th:class="${note.id == targetNote.id} ? 'bg-blue-600' : ''">
@@ -18,12 +25,12 @@
                 </li>
             </ul>
 
-            <form action="/write" method="post">
+            <form th:action="@{|/books/${targetNotebook.id}/write|}" method="post">
                 <input type="submit" value="추가">
             </form>
         </div>
 
-        <div class="bg-green-300 w-[80%]">
+        <div class="bg-green-300 w-[60%]">
             <form action="/update" method="post" id="updateForm">
                 <div>
                     <input type="hidden" name="id" th:value="${targetNote.id}">
