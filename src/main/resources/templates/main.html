@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <link rel="stylesheet" href="/main.css">
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body>
@@ -23,7 +22,7 @@
         </div>
 
         <div class="bg-green-300 w-[80%]">
-            <form action="/update" method="post">
+            <form action="/update" method="post" id="updateForm">
                 <div>
                     <input type="hidden" name="id" th:value="${targetNote.id}">
                 </div>
@@ -34,14 +33,29 @@
                     <textarea name="content" cols="30" rows="10" th:text="${targetNote.content}"></textarea>
                 </div>
                 <div>
-                    <input type="submit" value="수정">
+                    <input type="button" value="수정" onclick="updateForm()">
                 </div>
             </form>
-            <form th:action="@{|/delete/${targetNote.id}|}" method="post">
-                <input type="submit" value="삭제">
+            <form th:action="@{|/delete/${targetNote.id}|}" method="post" id="deleteForm">
+                <input type="button" value="삭제" onclick="deleteForm();">
             </form>
         </div>
     </div>
 </div>
 </body>
+<script>
+    function updateForm() {
+        const form = document.getElementById("updateForm");
+        if(confirm("수정하시겠습니까?")) {
+            form.submit();
+        }
+    }
+
+    function deleteForm() {
+        const form = document.getElementById("deleteForm");
+        if(confirm("삭제하시겠습니까?")) {
+            form.submit();
+        }
+    }
+</script>
 </html>
