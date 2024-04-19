@@ -5,9 +5,11 @@ import com.example.ms1.note.notebook.NotebookRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Controller
@@ -34,11 +36,12 @@ public class NoteController {
 
         List<Notebook> notebookList = notebookRepository.findAll();
         Notebook targetNotebook = notebookRepository.findById(notebookId).get();
+        List<Note> noteList = noteRepository.findByNotebook(targetNotebook);
 
         model.addAttribute("notebookList", notebookList);
         model.addAttribute("targetNotebook", targetNotebook);
         model.addAttribute("targetNote", note);
-        model.addAttribute("noteList", noteRepository.findAll());
+        model.addAttribute("noteList", noteList);
 
         return "main";
     }

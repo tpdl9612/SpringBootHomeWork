@@ -10,7 +10,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Controller
@@ -33,8 +32,8 @@ public class MainController {
             return "redirect:/";
         }
         Notebook targetNotebook = notebookList.get(0);
+        List<Note> noteList = noteRepository.findByNotebook(targetNotebook);
 
-        List<Note> noteList = noteRepository.findAll();
         if (noteList.isEmpty()) {
             noteService.saveDefault(targetNotebook);
             return "redirect:/";
