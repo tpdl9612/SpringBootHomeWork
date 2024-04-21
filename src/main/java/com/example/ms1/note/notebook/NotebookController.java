@@ -22,9 +22,10 @@ public class NotebookController {
         Notebook notebook = new Notebook();
         notebook.setName("새노트북");
 
-        notebookRepository.save(notebook);
-        noteService.saveDefault(notebook);
+        Note note = noteService.saveDefault();
+        notebook.addNote(note);
 
+        notebookRepository.save(notebook);
         return "redirect:/";
 
     }
@@ -35,6 +36,9 @@ public class NotebookController {
 
         Notebook child = new Notebook();
         child.setName("새노트북");
+
+        Note note = noteService.saveDefault();
+        child.addNote(note);
         notebookRepository.save(child);
 
         parent.addChild(child);

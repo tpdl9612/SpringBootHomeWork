@@ -31,4 +31,9 @@ public class Notebook {
         child.setParent(this);
         children.add(child);
     }
+
+    public void addNote(Note note) {
+        note.setNotebook(this);
+        noteList.add(note);
+    }
 }
