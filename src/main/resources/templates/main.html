@@ -21,6 +21,10 @@
             <form th:action="@{|/books/write|}" method="post">
                 <input type="submit" value="추가">
             </form>
+
+            <form th:action="@{|/groups/${targetNotebook.id}/books/write|}" method="post">
+                <input type="submit" value="하위 노트북 추가">
+            </form>
         </div>
         <div class="bg-red-300 w-[20%] h-[800px] text-center ">
             <ul class="h-[100%] overflow-scroll">
