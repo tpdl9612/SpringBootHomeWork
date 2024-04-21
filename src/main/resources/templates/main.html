@@ -15,19 +15,24 @@
         <div class="bg-indigo-300 w-[20%]">
             <ul class="menu h-[100%] overflow-scroll">
                 <li th:each="notebook : ${notebookList}"
-                    th:class="${notebook.id == targetNotebook.id} ? 'bg-blue-600' : ''">
+                    >
                     <th:block th:if="${!#lists.isEmpty(notebook.children)}">
                         <details open>
-                            <summary><a th:href="@{|/books/${notebook.id}|}" th:text="${notebook.name}"></a></summary>
+                            <summary class="flex p-0"><a class="w-[100%] p-[10px]"
+                                                         th:classappend="${notebook.id == targetNotebook.id} ? 'bg-blue-600':''"
+                                                         th:href="@{|/books/${notebook.id}|}"
+                                                         th:text="${notebook.name}"></a></summary>
                             <ul>
                                 <li th:each="child : ${notebook.children}">
-                                    <a th:href="@{|/books/${child.id}|}" th:text="${child.name}"></a>
+                                    <a th:class="${child.id == targetNotebook.id} ? 'w-[100%] p-[10px] bg-blue-600' : '' "
+                                       th:href="@{|/books/${child.id}|}" th:text="${child.name}"></a>
                                 </li>
                             </ul>
                         </details>
                     </th:block>
                     <th:block th:if="${#lists.isEmpty(notebook.children) and notebook.parent == null}">
-                        <a th:href="@{|/books/${notebook.id}|}" th:text="${notebook.name}"></a>
+                        <a th:class="${notebook.id == targetNotebook.id} ? 'w-[100%] p-[10px] bg-blue-600' : '' "
+                           th:href="@{|/books/${notebook.id}|}" th:text="${notebook.name}"></a>
                     </th:block>
                 </li>
             </ul>
