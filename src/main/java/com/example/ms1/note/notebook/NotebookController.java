@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 @RequiredArgsConstructor
 public class NotebookController {
 
-
     private final NotebookRepository notebookRepository;
     private final NoteService noteService;
 
