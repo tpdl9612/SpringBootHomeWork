@@ -1,5 +1,6 @@
 package com.example.ms1.note.note;
 
+import com.example.ms1.note.MainService;
 import com.example.ms1.note.notebook.Notebook;
 import com.example.ms1.note.notebook.NotebookRepository;
 import com.example.ms1.note.notebook.NotebookService;
@@ -19,10 +20,11 @@ import java.util.List;
 public class NoteController {
 
     private final NoteService noteService;
+    private final MainService mainService;
 
     @PostMapping("/write")
     public String write(@PathVariable("notebookId") Long notebookId) {
-        Notebook notebook = noteService.getNotebook(notebookId);
+        Notebook notebook = mainService.getNotebook(notebookId);
         noteService.saveDefault(notebook);
         return "redirect:/";
     }
@@ -31,8 +33,8 @@ public class NoteController {
     public String detail(Model model, @PathVariable("notebookId") Long notebookId, @PathVariable("id") Long id) {
 
         Note note = noteService.getNote(id);
-        List<Notebook> notebookList = noteService.getNotebookList();
-        Notebook targetNotebook = noteService.getNotebook(notebookId);
+        List<Notebook> notebookList = mainService.getNotebookList();
+        Notebook targetNotebook = mainService.getNotebook(notebookId);
         List<Note> noteList = noteService.getNoteListByNotebook(targetNotebook);
 
         model.addAttribute("notebookList", notebookList);
