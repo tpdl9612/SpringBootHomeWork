@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.10.2/dist/full.min.css" rel="stylesheet" type="text/css"/>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body>
@@ -16,14 +17,41 @@ th:with="notebookList=${mainDataDto.notebookList},
     </div>
     <div class="bg-red-600 flex">
         <div class="bg-indigo-300 w-[20%]">
-            <ul class="h-[100%] overflow-scroll">
-                <li th:each="notebook : ${notebookList}" th:class="${notebook.id == targetNotebook.id} ? 'bg-blue-600' : ''">
-                    <a th:href="@{|/books/${notebook.id}|}" th:text="${notebook.name}"></a>
+            <ul class="menu h-[100%] overflow-scroll">
+                <li th:each="notebook : ${notebookList}"
+                    th:with="basic='w-[90%] p-[10px]'">
+                    <th:block th:if="${!#lists.isEmpty(notebook.children)}">
+                        <details open>
+                            <summary class="flex p-0"><a th:class="${basic}"
+                                                         th:classappend="${notebook.id == targetNotebook.id} ? 'bg-blue-600':''"
+                                                         th:href="@{|/books/${notebook.id}|}"
+                                                         th:text="${notebook.name}"></a></summary>
+                            <ul>
+                                <li th:each="child : ${notebook.children}">
+                                    <a th:class="${basic}"
+                                       th:classappend="${child.id == targetNotebook.id} ? 'bg-blue-600' : '' "
+                                       th:href="@{|/books/${child.id}|}" th:text="${child.name}"></a>
+                                </li>
+                            </ul>
+                        </details>
+                    </th:block>
+                    <th:block th:if="${#lists.isEmpty(notebook.children) and notebook.parent == null}">
+                        <a th:class="${basic}"
+                           th:classappend="${notebook.id == targetNotebook.id} ? 'bg-blue-600' : '' "
+                           th:href="@{|/books/${notebook.id}|}" th:text="${notebook.name}"></a>
+                    </th:block>
                 </li>
             </ul>
 
             <form th:action="@{|/books/write|}" method="post">
                 <input type="submit" value="추가">
+            </form>
+
+            <form th:action="@{|/groups/${targetNotebook.id}/books/write|}" method="post">
+                <input type="submit" value="하위 노트북 추가">
+            </form>
+            <form th:action="@{|/books/${targetNotebook.id}/delete|}" method="post">
+                <input type="submit" value="삭제">
             </form>
         </div>
         <div class="bg-red-300 w-[20%] h-[800px] text-center ">
@@ -39,7 +67,8 @@ th:with="notebookList=${mainDataDto.notebookList},
         </div>
 
         <div class="bg-green-300 w-[60%]">
-            <form th:action="@{|/books/${targetNotebook.id}/notes/${targetNote.id}/update|}" method="post" id="updateForm">
+            <form th:action="@{|/books/${targetNotebook.id}/notes/${targetNote.id}/update|}" method="post"
+                  id="updateForm">
                 <div>
                     <input type="hidden" name="id" th:value="${targetNote.id}">
                 </div>
@@ -53,7 +82,8 @@ th:with="notebookList=${mainDataDto.notebookList},
                     <input type="button" value="수정" onclick="updateForm()">
                 </div>
             </form>
-            <form th:action="@{|/books/${targetNotebook.id}/notes/${targetNote.id}/delete|}" method="post" id="deleteForm">
+            <form th:action="@{|/books/${targetNotebook.id}/notes/${targetNote.id}/delete|}" method="post"
+                  id="deleteForm">
                 <input type="button" value="삭제" onclick="deleteForm();">
             </form>
         </div>
@@ -63,14 +93,14 @@ th:with="notebookList=${mainDataDto.notebookList},
 <script>
     function updateForm() {
         const form = document.getElementById("updateForm");
-        if(confirm("수정하시겠습니까?")) {
+        if (confirm("수정하시겠습니까?")) {
             form.submit();
         }
     }
 
     function deleteForm() {
         const form = document.getElementById("deleteForm");
-        if(confirm("삭제하시겠습니까?")) {
+        if (confirm("삭제하시겠습니까?")) {
             form.submit();
         }
     }

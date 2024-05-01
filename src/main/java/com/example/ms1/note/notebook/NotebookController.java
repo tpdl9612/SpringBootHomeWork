@@ -23,6 +23,13 @@ public class NotebookController {
 
     }
 
+    @PostMapping("/groups/{notebookId}/books/write")
+    public String groupWrite(@PathVariable("notebookId") Long notebookId) {
+
+        mainService.saveGroupNotebook(notebookId);
+        return "redirect:/";
+    }
+
     @GetMapping("/books/{id}")
     public String detail(@PathVariable("id") Long id) {
         Notebook notebook = notebookService.getNotebook(id);
@@ -30,4 +37,12 @@ public class NotebookController {
 
         return "redirect:/books/%d/notes/%d".formatted(id, note.getId());
     }
+
+    @PostMapping("/books/{id}/delete")
+    public String delete(@PathVariable("id") Long id) {
+//        mainService.delete(id);
+        notebookService.delete(id);
+        return "redirect:/";
+    }
+
 }
