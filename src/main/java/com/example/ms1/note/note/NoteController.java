@@ -1,5 +1,6 @@
 package com.example.ms1.note.note;
 
+import com.example.ms1.note.MainDataDto;
 import com.example.ms1.note.MainService;
 import com.example.ms1.note.notebook.Notebook;
 import com.example.ms1.note.notebook.NotebookRepository;
@@ -32,15 +33,8 @@ public class NoteController {
     @GetMapping("/{id}")
     public String detail(Model model, @PathVariable("notebookId") Long notebookId, @PathVariable("id") Long id) {
 
-        Note note = noteService.getNote(id);
-        List<Notebook> notebookList = mainService.getNotebookList();
-        Notebook targetNotebook = mainService.getNotebook(notebookId);
-        List<Note> noteList = noteService.getNoteListByNotebook(targetNotebook);
-
-        model.addAttribute("notebookList", notebookList);
-        model.addAttribute("targetNotebook", targetNotebook);
-        model.addAttribute("targetNote", note);
-        model.addAttribute("noteList", noteList);
+        MainDataDto mainDataDto = mainService.getMainData(notebookId, id);
+        model.addAttribute("mainDataDto", mainDataDto);
 
         return "main";
     }

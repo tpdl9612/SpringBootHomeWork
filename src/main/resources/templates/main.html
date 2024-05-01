@@ -6,7 +6,11 @@
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body>
-<div class="bg-yellow-400">
+<div class="bg-yellow-400"
+th:with="notebookList=${mainDataDto.notebookList},
+        noteList=${mainDataDto.noteList},
+        targetNotebook=${mainDataDto.targetNotebook},
+        targetNote=${mainDataDto.targetNote}">
     <div class="bg-blue-300">
         <a href="/">logo</a>
     </div>

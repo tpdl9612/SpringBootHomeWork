@@ -18,7 +18,7 @@ public class NotebookController {
 
     @PostMapping("/books/write")
     public String write() {
-        mainService.saveDefault();
+        mainService.saveDefaultNotebook();
         return "redirect:/";
 
     }
