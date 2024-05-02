@@ -1,13 +1,6 @@
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.10.2/dist/full.min.css" rel="stylesheet" type="text/css"/>
-    <script src="https://cdn.tailwindcss.com"></script>
-</head>
+<html lang="ko" layout:decorate="~{layout}">
 <body>
-<div class="bg-yellow-400"
+<div layout:fragment="content" class="bg-yellow-400"
 th:with="notebookList=${mainDataDto.notebookList},
         noteList=${mainDataDto.noteList},
         targetNotebook=${mainDataDto.targetNotebook},
@@ -53,6 +46,24 @@ th:with="notebookList=${mainDataDto.notebookList},
             <form th:action="@{|/books/${targetNotebook.id}/delete|}" method="post">
                 <input type="submit" value="삭제">
             </form>
+            <label for="my_modal_6" class="btn">노트 이름 변경</label>
+            <a href="/signup" class="btn">회원 가입</a>
+            <a href="/logout" class="btn">로그아웃</a>
+
+            <!-- Put this part before </body> tag -->
+            <input type="checkbox" id="my_modal_6" class="modal-toggle" />
+            <div class="modal" role="dialog">
+                <div class="modal-box flex flex-col items-center">
+                    <form th:action="@{|/books/${targetNotebook.id}/update|}" class="flex" method="post">
+                        <input type="hidden" name="targetNoteId" th:value="${targetNote.id}">
+                        <input type="text" name="name" class="border-2" th:value="${targetNotebook.name}">
+                        <input type="submit" class="btn">
+                    </form>
+                    <div class="modal-action flex justify-center">
+                        <label for="my_modal_6" class="btn">Close!</label>
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="bg-red-300 w-[20%] h-[800px] text-center ">
             <ul class="h-[100%] overflow-scroll">
@@ -88,21 +99,20 @@ th:with="notebookList=${mainDataDto.notebookList},
             </form>
         </div>
     </div>
-</div>
-</body>
-<script>
-    function updateForm() {
-        const form = document.getElementById("updateForm");
-        if (confirm("수정하시겠습니까?")) {
-            form.submit();
+    <script>
+        function updateForm() {
+            const form = document.getElementById("updateForm");
+            if (confirm("수정하시겠습니까?")) {
+                form.submit();
+            }
         }
-    }
 
-    function deleteForm() {
-        const form = document.getElementById("deleteForm");
-        if (confirm("삭제하시겠습니까?")) {
-            form.submit();
+        function deleteForm() {
+            const form = document.getElementById("deleteForm");
+            if (confirm("삭제하시겠습니까?")) {
+                form.submit();
+            }
         }
-    }
-</script>
+    </script>
+</div>
 </html>

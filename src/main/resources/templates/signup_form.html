@@ -1,0 +1,15 @@
+<html lang="ko" layout:decorate="~{layout}">
+<div layout:fragment="content" class="w-[800px] mx-auto">
+    <form  th:action="@{/signup}" th:object="${memberForm}" class="flex flex-col gap-7" method="post">
+        <input type="text" class="input" name="loginId" th:field="*{loginId}" placeholder="아이디">
+        <p th:if="${#fields.hasErrors('loginId')}" th:errors="*{loginId}"></p>
+        <input type="password" class="input" name="password" placeholder="비밀번호">
+        <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></p>
+        <input type="text" class="input" name="nickname" th:field="*{nickname}" placeholder="닉네임">
+        <p th:if="${#fields.hasErrors('nickname')}" th:errors="*{nickname}"></p>
+        <input type="text" class="input" name="email" th:field="*{email} "placeholder="이메일">
+        <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></p>
+        <input type="submit" class="btn" value="가입">
+    </form>
+</div>
+</html>
