@@ -1,6 +1,6 @@
 <html lang="ko" layout:decorate="~{layout}">
 <body>
-<div layout:fragment="content" class="bg-yellow-400"
+<div layout:fragment="content"
 th:with="notebookList=${mainDataDto.notebookList},
         noteList=${mainDataDto.noteList},
         targetNotebook=${mainDataDto.targetNotebook},
@@ -8,7 +8,7 @@ th:with="notebookList=${mainDataDto.notebookList},
     <div class="bg-blue-300">
         <a href="/">logo</a>
     </div>
-    <div class="bg-red-600 flex">
+    <div class="flex">
         <div class="bg-indigo-300 w-[20%]">
             <ul class="menu h-[100%] overflow-scroll">
                 <li th:each="notebook : ${notebookList}"
@@ -77,7 +77,7 @@ th:with="notebookList=${mainDataDto.notebookList},
             </form>
         </div>
 
-        <div class="bg-green-300 w-[60%]">
+        <div class="w-[60%]">
             <form th:action="@{|/books/${targetNotebook.id}/notes/${targetNote.id}/update|}" method="post"
                   id="updateForm">
                 <div>
@@ -86,9 +86,7 @@ th:with="notebookList=${mainDataDto.notebookList},
                 <div>
                     <input type="text" name="title" th:value="${targetNote.title}">
                 </div>
-                <div>
-                    <textarea name="content" cols="30" rows="10" th:text="${targetNote.content}"></textarea>
-                </div>
+                <div id="editor"></div>
                 <div>
                     <input type="button" value="수정" onclick="updateForm()">
                 </div>
@@ -99,6 +97,17 @@ th:with="notebookList=${mainDataDto.notebookList},
             </form>
         </div>
     </div>
+    <script>
+        const Editor = toastui.Editor;
+        const editor = new Editor({
+            el: document.querySelector('#editor'),
+            height: '700px',
+            initialEditType: 'markdown',
+            previewStyle: 'vertical'
+        });
+
+        editor.getMarkdown();
+    </script>
     <script>
         function updateForm() {
             const form = document.getElementById("updateForm");
